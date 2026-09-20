@@ -4,13 +4,13 @@ run-dev:
 
 # accessible on http://localhost:80
 run-prod:
-	docker compose -f compose.production.yaml up
+	docker run -p 4000:80 harshp20/hyperlocal-weather-dashboard:prod
 
 build-dev:
 	docker build \
 	--platform=linux/arm64,linux/amd64 \
 	-f Dockerfile.development \
-	-t hyperlocal-weather-dashboard:dev .
+	-t harshp20/hyperlocal-weather-dashboard:dev .
 
 build-prod:
 	docker build \
@@ -24,4 +24,4 @@ push-prod: build-prod
 	docker push harshp20/hyperlocal-weather-dashboard:prod
 
 push-dev: build-dev
-	docker push harshp20/hyperlocal-weather-dashboard:prod
+	docker push harshp20/hyperlocal-weather-dashboard:dev
