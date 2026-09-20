@@ -36,12 +36,12 @@ A responsive weather dashboard built with React and TypeScript. Search for a pla
 
 ## Prerequisites
 
-You need API keys from:
+The app needs two client-side API keys. Vite only exposes variables whose names start with `VITE_`, and those values are included in the frontend bundle.
 
-1. **[OpenWeather](https://openweathermap.org/api)** — One Call API 3.0 and map layers
-2. **[MapTiler](https://www.maptiler.com/)** — Basemap styles
+1. **[OpenWeather](https://openweathermap.org/api)** — Sign up, open [API keys](https://home.openweathermap.org/api_keys), and subscribe to **One Call API 3.0** (needed for current weather and forecasts). Map overlay tiles use the same key.
+2. **[MapTiler](https://www.maptiler.com/)** — Sign up for [MapTiler Cloud](https://cloud.maptiler.com/), then copy an API key from the account dashboard. This key is used for basemap styles.
 
-Both services offer free tiers suitable for development.
+Both services offer free tiers suitable for development. New OpenWeather keys can take a short time to activate.
 
 ## Getting started
 
@@ -55,14 +55,18 @@ npm install
 
 ### 2. Environment variables
 
-Create a `.env` file in the project root:
+Copy the example file and add your keys:
 
-```env
-VITE_OPENWEATHER_API_KEY=your_openweather_api_key
-VITE_MAPTILER_API_KEY=your_maptiler_api_key
+```bash
+cp .env.example .env.local
 ```
 
-> **Note:** Never commit `.env` or API keys. Vite exposes only variables prefixed with `VITE_`.
+```env
+VITE_OPENWEATHER_API_KEY=YOUR_OPEN_WEATHER_3.0_API_KEY
+VITE_MAPTILER_API_KEY=YOUR_MAPTILER_API_KEY
+```
+
+Do not commit `.env.local` or real API keys. `.env.example` is a placeholder-only template.
 
 ### 3. Run the dev server
 
@@ -70,7 +74,42 @@ VITE_MAPTILER_API_KEY=your_maptiler_api_key
 npm run dev
 ```
 
-Open the URL shown in the terminal (Vite runs with `--host` so you can test on other devices on your network).
+Open the URL shown in the terminal (default `http://localhost:3000`). Vite runs with `--host` so you can also test from other devices on your network.
+
+## Docker
+
+`Dockerfile.development` runs the Vite dev server in a container on port **3000**. `.env.local` is not copied into the image (see `.dockerignore`), so pass the same keys at runtime.
+
+### Build
+
+```bash
+docker build -f Dockerfile.development -t weather-dashboard:dev .
+```
+
+### Run
+
+```bash
+docker run --rm -p 3000:3000 \
+  -e VITE_OPENWEATHER_API_KEY=YOUR_OPEN_WEATHER_3.0_API_KEY \
+  -e VITE_MAPTILER_API_KEY=YOUR_MAPTILER_API_KEY \
+  weather-dashboard:dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+### Docker Compose
+
+`compose.example.yaml` points at a prebuilt image and injects the same environment variables. Copy it, replace the placeholders, then start the service:
+
+```bash
+cp compose.example.yaml compose.yaml
+```
+
+Edit `VITE_OPENWEATHER_API_KEY` and `VITE_MAPTILER_API_KEY` in `compose.yaml`, then:
+
+```bash
+docker compose -f compose.yaml up
+```
 
 ## Scripts
 
