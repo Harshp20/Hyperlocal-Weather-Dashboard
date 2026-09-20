@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+Dockerfile.production
+compose.development.yaml
+compose.production.yaml

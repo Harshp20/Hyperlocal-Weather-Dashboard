@@ -1,0 +1,12 @@
+.cursor
+.vscode
+node_modules
+screenshots
+Dockerfile*
+README.md
+biome.json
+*.local
+.dockerignore
+.gitignore
+docker-compose.*
+compose.*

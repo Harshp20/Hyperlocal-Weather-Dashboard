@@ -1,0 +1,8 @@
+services:
+  weather-app-dev:
+    image: harshp20/hyperlocal-weather-dashboard:dev
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_OPENWEATHER_API_KEY: YOUR_OPEN_WEATHER_3.0_API_KEY
+      VITE_MAPTILER_API_KEY: YOUR_MAPTILER_API_KEY
