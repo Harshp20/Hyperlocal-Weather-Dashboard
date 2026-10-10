@@ -10,3 +10,4 @@ biome.json
 .gitignore
 docker-compose.*
 compose.*
+dist
